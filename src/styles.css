@@ -21,12 +21,17 @@ body {
   background: var(--bg);
   color: var(--text);
   -webkit-font-smoothing: antialiased;
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+  overscroll-behavior: none;
 }
 
 .app {
-  padding: 0.5rem;
+  /* Safe-area lives in .app's padding (not body) so .app fits exactly in
+     100dvh with no overflow below the viewport in standalone PWA mode. */
+  padding:
+    calc(0.5rem + env(safe-area-inset-top))
+    calc(0.5rem + env(safe-area-inset-right))
+    calc(0.5rem + env(safe-area-inset-bottom))
+    calc(0.5rem + env(safe-area-inset-left));
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
@@ -185,6 +190,36 @@ body {
 input[type="range"] {
   width: 100%;
   accent-color: var(--accent);
+  /* Treat thumb drag as slider input, not as a pan/scroll gesture. Without
+     this, iOS lets the parent's overflow:auto eat the drag. */
+  touch-action: manipulation;
+  /* Wider touch target so the thumb is comfortable to grab on iPad. */
+  height: 28px;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+  height: 4px;
+  background: var(--panel-2);
+  border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  margin-top: -10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: none;
+  cursor: pointer;
+}
+
+input[type="range"]:disabled::-webkit-slider-thumb {
+  background: var(--border);
 }
 
 .dim-row {
