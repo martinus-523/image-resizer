@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/types.ts","./src/components/comparepreview.tsx","./src/components/controls.tsx","./src/components/dropzone.tsx","./src/lib/format.ts","./src/lib/workerclient.ts","./src/types/libheif-js.d.ts","./src/worker/imageworker.ts","./src/worker/orientation.ts"],"version":"5.9.3"}
